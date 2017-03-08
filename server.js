@@ -10,6 +10,9 @@ const HapiMongo = require('hapi-mongodb');
 
 require('./common/global.js');
 const addUserController = require('./api/add_user/controller/addUserController');
+const signInController = require('./api/sign_in/controller/signInController');
+const getUserDtlController = require('./api/get_user_details/controller/getUserDtlController');
+const getListUserController = require('./api/get_list_user/controller/getListUserController');
 
 const dbOpts = {
     url: 'mongodb://localhost:27017/hapi_training',
@@ -30,22 +33,6 @@ const options = {
 };
 
 server.route({
-    method: 'GET',
-    path: '/{name?}',
-    config: {
-        handler: function (request, reply) {
-            reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
-        },
-        tags: ['api'],
-        validate: {
-            params: {
-                name: Joi.string().required().default('Bao')
-            }
-        }
-    }
-});
-
-server.route({
     method: 'POST',
     path: '/user',
     config: {
@@ -62,6 +49,53 @@ server.route({
                 birthday: Joi.string()
             }).label('userInfo')
         }
+    }
+});
+
+server.route({
+    method: 'POST',
+    path: '/signin',
+    config: {
+        handler: function (request, reply) {
+            return reply(signInController.signIn(request,reply));
+        },
+        description: 'Sign in',
+        tags: ['api', 'Sign in'],
+        validate: {
+            payload: Joi.object({
+                userName: Joi.string().required().default('Bao Tran'),
+                email: Joi.string().email().required().default('ducbao90@gmail.com')
+            }).label('userCredential')
+        }
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/user/{userID}',
+    config: {
+        handler: function (request, reply) {
+            return reply(getUserDtlController.getUserDtl(request,reply));
+        },
+        description: 'Get user details information',
+        tags: ['api', 'user'],
+        validate: {
+            params: {
+                userID: Joi.string().required()
+            }
+        }
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/user',
+    config: {
+        handler: function (request, reply) {
+            return reply(getListUserController.getListUsers(request,reply));
+        },
+        description: 'Get all users',
+        tags: ['api', 'user']
     }
 });
 
