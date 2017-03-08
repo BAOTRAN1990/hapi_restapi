@@ -25,7 +25,7 @@ function addUser(req, res){
             return dbOperations.insert(db, 'user', newUserInfo);
         }
     }).then(result => {
-        return Promise.resolve(newUserInfo);
+        return Promise.resolve({message: 'Added user successfully.'});
     }).catch(err => {
         // console.log("here");
         return Promise.reject(err);

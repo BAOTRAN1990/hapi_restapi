@@ -50,11 +50,7 @@ server.route({
     path: '/user',
     config: {
         handler: function (request, reply) {
-            return addUserController.addUser(request,reply).then(result => {
-                reply(result);
-            }).catch(err => {
-                reply(err);
-            });
+            return reply(addUserController.addUser(request,reply));
         },
         description: 'Add new user',
         tags: ['api', 'user'],
