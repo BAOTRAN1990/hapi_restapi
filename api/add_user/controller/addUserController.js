@@ -17,7 +17,6 @@ function addUser(req, res){
     let newUserInfo = req.payload;
 
     return dbOperations.findOne(db, 'user', {email: newUserInfo.email}).then(result => {
-        // console.log(result);
         if(result !== null){
             return Promise.reject(Boom.conflict('Conflict user email.', null));
         } else {
@@ -27,7 +26,6 @@ function addUser(req, res){
     }).then(result => {
         return Promise.resolve({message: 'Added user successfully.'});
     }).catch(err => {
-        // console.log("here");
         return Promise.reject(err);
     });
 }

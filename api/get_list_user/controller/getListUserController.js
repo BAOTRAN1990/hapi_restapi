@@ -9,16 +9,13 @@ const dataAccess = require('../../../common/dataManager');
  * @param res   response to client
  */
 function getListUsers(req, res){
-    //console.log(req.payload);
     const db = req.mongo.db;
     const ObjectID = req.mongo.ObjectID;
     const dbOperations = new dataAccess.Operations();
 
     return dbOperations.findAll(db, 'user').then(result => {
-        console.log(result);
         return Promise.resolve({listUsers: result});
     }).catch(err => {
-        // console.log("here");
         return Promise.reject(err);
     });
 }

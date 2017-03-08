@@ -3,13 +3,10 @@
 class Operations {
     findOne(db, collectionName, findConditionObj){
         return new Promise((resolve, reject) => {
-            // console.log(findConditionObj);
             db.collection(collectionName).findOne(findConditionObj, function (err, result){
-                //console.log(result);
                 if(err){
                     return reject(Boom.internal('Internal MongoDB error', err));
                 } else {
-                    //console.log(result);
                     return resolve(result);
                 }
             });
@@ -18,13 +15,10 @@ class Operations {
 
     findAll(db, collectionName){
         return new Promise((resolve, reject) => {
-            // console.log(findConditionObj);
             db.collection(collectionName).find().toArray(function (err, result){
-                console.log(result);
                 if(err){
                     return reject(Boom.internal('Internal MongoDB error', err));
                 } else {
-                    //console.log(result);
                     return resolve(result);
                 }
             });
