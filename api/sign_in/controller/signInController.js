@@ -12,10 +12,10 @@ function signIn(req, res){
     const db = req.mongo.db;
     const ObjectID = req.mongo.ObjectID;
     const dbOperations = new dataAccess.Operations();
-
+    //console.log(req.payload);
     let userCredential = req.payload;
 
-    return dbOperations.findOne(db, 'user', {userName: userCredential.userName, email: userCredential.email}).then(result => {
+    return dbOperations.findOne(db, 'user', {email: userCredential.email, password: userCredential.password}).then(result => {
         if(result === null){
             return Promise.reject(Boom.unauthorized('Wrong username and password.', null));
         } else {

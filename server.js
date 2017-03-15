@@ -46,7 +46,7 @@ server.route({
                 userName: Joi.string().required().default('Bao Tran'),
                 email: Joi.string().email().required().default('ducbao90@gmail.com'),
                 password: Joi.string().required(),
-                birthday: Joi.string()
+                birthday: Joi.string().allow('')
             }).label('userInfo')
         }
     }
@@ -63,8 +63,8 @@ server.route({
         tags: ['api', 'Sign in'],
         validate: {
             payload: Joi.object({
-                userName: Joi.string().required().default('Bao Tran'),
-                email: Joi.string().email().required().default('ducbao90@gmail.com')
+                email: Joi.string().required(),
+                password: Joi.string().required()
             }).label('userCredential')
         }
     }
